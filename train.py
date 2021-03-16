@@ -113,16 +113,20 @@ print (X_test.shape, y_test.shape)
 
 
 # In[67]:
-
-
+ 
+import mlflow
+import mlflow.sklearn
+mlflow.set_experiment(experiment_name="experiment2")
+mlflow.set_tracking_uri("http://localhost:5000") 
 #estimation des coeeficients du modele lineaire
-lm = LinearRegression()
-lm.fit(X_train,y_train)
+with mlflow.start_run():
+ lm = LinearRegression()
+ lm.fit(X_train,y_train)
 #Afficher les coefficients
 print(lm.intercept_)
 print(lm.coef_)
 
-
+mlflow.sklearn.log_model(lr, "model")
 # In[68]:
 
 
@@ -173,6 +177,7 @@ with open("metrics.txt", 'w') as outfile:
         outfile.write("R2: {0:2.1f}\n".format(r2))
 
 
+  
 # In[73]:
 #Sauvegarder le modele
 import pickle
