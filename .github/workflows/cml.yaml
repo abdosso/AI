@@ -14,9 +14,8 @@ jobs:
           password: ${{ secrets.DOCKER_PWD }}
 
     - name: "Entrainer le model"
-    env:
-      
-      repo_token: ${{ secrets.GITHUB_TOKEN }}
+      env:
+        repo_token: ${{ secrets.GITHUB_TOKEN }}
       run: |
 
         # Le workflow sera ici 
