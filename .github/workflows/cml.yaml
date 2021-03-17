@@ -3,7 +3,14 @@ on: [push]
 jobs:
   run:
     runs-on: [ubuntu-latest]
-    container: docker://dvcorg/cml-py3:latest
+    
+    - name: Build and Push Docker Image
+    uses: mr-smithers-excellent/docker-build-push@v4
+    with:
+      image: abdosso/ml
+      registry: docker.io
+      username: ${{ secrets.DOCKER_USER }}
+      password: ${{ secrets.DOCKER_PWD }}
     steps:
       - uses: actions/checkout@v2
       - name: "Entrainer le model"
