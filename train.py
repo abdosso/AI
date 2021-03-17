@@ -114,19 +114,15 @@ print (X_test.shape, y_test.shape)
 
 # In[67]:
  
-import mlflow
-import mlflow.sklearn
-mlflow.set_experiment(experiment_name="experiment2")
-mlflow.set_tracking_uri("http://localhost:5000") 
+
 #estimation des coeeficients du modele lineaire
-with mlflow.start_run():
+
  lm = LinearRegression()
  lm.fit(X_train,y_train)
 #Afficher les coefficients
 print(lm.intercept_)
 print(lm.coef_)
 
-mlflow.sklearn.log_model(lr, "model")
 # In[68]:
 
 
