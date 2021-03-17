@@ -3,28 +3,30 @@ on: [push]
 jobs:
   run:
     runs-on: [ubuntu-latest]
-    
-    - name: Build and Push Docker Image
-    uses: mr-smithers-excellent/docker-build-push@v4
-    with:
-      image: abdosso/ml
-      registry: docker.io
-      username: ${{ secrets.DOCKER_USER }}
-      password: ${{ secrets.DOCKER_PWD }}
     steps:
-      - uses: actions/checkout@v2
-      - name: "Entrainer le model"
-        env:
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
-        run: |
+    - uses: actions/checkout@v2
+    - name: Build and Push Docker Image
+      uses: mr-smithers-excellent/docker-build-push@v4
+      with:
+          image: abdosso/ml
+          registry: docker.io
+          username: ${{ secrets.DOCKER_USER }}
+          password: ${{ secrets.DOCKER_PWD }}
 
-          # Le workflow sera ici 
-          pip install -r requirements.txt
-          python train.py
+    - name: "Entrainer le model"
+    env:
+      
+      repo_token: ${{ secrets.GITHUB_TOKEN }}
+      run: |
 
-          # Ecrire le rappoart CML
-          echo "## Metriques:" >> report.md
-          cat metrics.txt >> report.md
-          cml-send-comment report.md
-          ls -l
-         
+        # Le workflow sera ici 
+        pip install -r requirements.txt
+        python train.py
+
+        # Ecrire le rappoart CML
+        echo "## Metriques:" >> report.md
+        cat metrics.txt >> report.md
+        cml-send-comment report.md
+        ls -l
+    
+
