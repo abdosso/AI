@@ -117,8 +117,8 @@ print (X_test.shape, y_test.shape)
 
 #estimation des coeeficients du modele lineaire
 
- lm = LinearRegression()
- lm.fit(X_train,y_train)
+lm = LinearRegression()
+lm.fit(X_train,y_train)
 #Afficher les coefficients
 print(lm.intercept_)
 print(lm.coef_)
