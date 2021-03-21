@@ -5,6 +5,17 @@ jobs:
     runs-on: [ubuntu-latest]
     steps:
     - uses: actions/checkout@v2
+    - uses: iterative/setup-cml@v1
+    - uses: iterative/setup-dvc@v1
+
+    - uses: actions/setup-python@v2
+      with:
+        python-version: '3.x'
+    
+    - name: cml
+      env:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          
     - name: Build and Push Docker Image
       with:
           image: abdosso/ml
@@ -20,9 +31,18 @@ jobs:
         # Le workflow sera ici 
         pip install -r requirements.txt
         python train.py
-
+        
+        # Pull dataset with DVC 
+        dvc pull data
+          
+        # Reproduce pipeline if any changes detected in dependencies
+        dvc repro 
+          
+        # Use DVC metrics diff to compare metrics to master
+        git fetch --prune --unshallow
         # Ecrire le rappoart CML
-        echo "## Metriques:" >> report.md
+        dvc metrics diff --show-md main >> report.md
+
         cat metrics.txt >> report.md
         cml-send-comment report.md
         ls -l
