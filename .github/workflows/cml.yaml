@@ -15,13 +15,7 @@ jobs:
     - name: cml
       env:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          
-    - name: Build and Push Docker Image
-      with:
-          image: abdosso/ml
-          registry: docker.io
-          username: ${{ secrets.DOCKER_USER }}
-          password: ${{ secrets.DOCKER_PWD }}
+         
 
     - name: "Entrainer le model"
       env:
