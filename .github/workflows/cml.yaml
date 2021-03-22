@@ -16,7 +16,7 @@ jobs:
          username: ${{ secrets.DOCKER_USER }}
          password: ${{ secrets.DOCKER_PWD }}
      - name: Build
-       run: docker build . -t abdosso/ml
+       run: docker build ./serv -t abdosso/ml
        
      - name:  push
        run: docker push abdosso/ml
