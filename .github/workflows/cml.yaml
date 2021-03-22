@@ -15,9 +15,11 @@ jobs:
        with:
          username: ${{ secrets.DOCKER_USER }}
          password: ${{ secrets.DOCKER_PWD }}
-         repository: abdosso/ml
-         tag_with_ref: true
-         push: ${{ startsWith(github.ref,'refs/tags/')}}
+     - name: Build and push
+       run: docker build -t abdosso/ml:1 .
+       
+     - name:  push
+       run: docker push abdosso/ml:1
   
    
 
